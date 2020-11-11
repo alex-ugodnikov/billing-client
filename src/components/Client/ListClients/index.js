@@ -1,13 +1,13 @@
 import React from 'react';
 
-const ListAuthors = props => {
+const ListClients = props => {
   return (
     <section>
       <ul>
         <ul>
-          {props.authors.map(author => (
-            <li key={author._id}>
-              {author.firstName} {author.lastName}
+          {props.clients.map(client => (
+            <li key={client._id}>
+              {client.firstName} {client.lastName}
             </li>
           ))}
         </ul>
@@ -16,4 +16,4 @@ const ListAuthors = props => {
   );
 };
 
-export default ListAuthors;
+export default ListClients;

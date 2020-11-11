@@ -6,9 +6,9 @@ export default class CreateClient extends React.Component {
   state = {
     firstName: '',
     lastName: '',
-    nationality: '',
-    birthday: '',
-    pictureUrl: '',
+    email: '',
+    company: '',
+    password: '',
     message: null
   };
 
@@ -27,9 +27,9 @@ export default class CreateClient extends React.Component {
   handleFormSubmission = event => {
     event.preventDefault();
 
-    const { firstName, lastName, nationality, birthday, pictureUrl } = this.state;
+    const { firstName, lastName, email, company, password } = this.state;
 
-    CLIENT_SERVICE.createClient({ firstName, lastName, nationality, birthday, pictureUrl })
+    CLIENT_SERVICE.createClient({ firstName, lastName, email, company, password })
       .then(responseFromServer => {
         const { client } = responseFromServer.data;
 
@@ -44,11 +44,11 @@ export default class CreateClient extends React.Component {
   };
 
   render() {
-    const { firstName, lastName, nationality, birthday, pictureUrl, message } = this.state;
+    const { firstName, lastName, email, company, password, message } = this.state;
     return (
       <>
         <section>
-          <h2> Create new Client </h2>
+          <h2> Create New Client </h2>
 
           <form onSubmit={this.handleFormSubmission}>
             <label>
@@ -74,34 +74,34 @@ export default class CreateClient extends React.Component {
             </label>
 
             <label>
-              Nationality
+              Company
               <input
-                name='nationality'
+                name='company'
                 type='text'
-                placeholder='English'
-                value={nationality}
+                placeholder='Apple'
+                value={company}
+                onChange={this.handleInputChange}
+              />
+            </label>            
+
+            <label>
+              Email:
+              <input
+                name='email'
+                type='email'
+                placeholder='ana@ironhack.com'
+                value={email}
                 onChange={this.handleInputChange}
               />
             </label>
 
             <label>
-              Birthday
+              Password:
               <input
-                name='birthday'
-                type='date'
-                placeholder='10/28/1900'
-                value={birthday}
-                onChange={this.handleInputChange}
-              />
-            </label>
-
-            <label>
-              Picture Url
-              <input
-                name='pictureUrl'
-                type='text'
-                placeholder='www.cool-image.com'
-                value={pictureUrl}
+                name='password'
+                type='password'
+                placeholder='**********'
+                value={password}
                 onChange={this.handleInputChange}
               />
             </label>

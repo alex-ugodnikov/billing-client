@@ -27,13 +27,14 @@ export default class App extends React.Component {
   };
 
   componentDidMount = () => {
-    Promise.all([CLIENT_SERVICE.getClients(), INVOICE_SERVICE.getInvoices(), AUTH_SERVICE.getAuthenticatedUser()])
+    Promise.all([CLIENT_SERVICE.getClients(), AUTH_SERVICE.getAuthenticatedUser()])
       .then(responseFromServer => {
+        console.log(responseFromServer[0].data);
         const { clients } = responseFromServer[0].data;
-        const { invoices } = responseFromServer[1].data;
-        const { user } = responseFromServer[2].data;
+        //const { invoices } = responseFromServer[1].data;
+        const { user } = responseFromServer[1].data;
 
-        this.setState({ clients, invoices, currentUser: user });
+        this.setState({ clients, currentUser: user });
       })
       .catch(err => console.log(err));
   };

@@ -21,7 +21,7 @@ const NavBar = props => {
         <>
         <p>Welcome, <span>{props.currentUser.username}</span></p>
           <p><Link to='/profile'>Edit Profile</Link></p>
-          <p><Link to='/authors/create'>Create Client</Link></p>
+          <p><Link to='/clients/create'>Create Client</Link></p>
           <p><Link to='/invoices/create'>Create Invoice</Link></p>
           <button onClick={logoutAndLiftUserState}>Logout</button>
         </>

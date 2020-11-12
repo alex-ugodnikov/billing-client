@@ -44,10 +44,18 @@ export default class App extends React.Component {
     this.setState({ currentUser: user });
   };
 
-  updateClients = client => {
-    const updatedClients = [...this.state.clients, client];
-    this.setState({ clients: updatedClients });
-  };
+  // updateClients = client => {
+  //   const updatedClients = [...this.state.clients, client];
+  //   this.setState({ clients: updatedClients });
+  // }; 
+
+  onClientsChange = () => {
+    CLIENT_SERVICE.getClients()
+      .then(clientsFromDb => {
+        this.setState({ clients: clientsFromDb.data.clients })
+      })
+      .catch(err => { console.log(err) })
+  }
 
   updateInvoices = invoice => {
     const updatedInvoices = [...this.state.invoices, invoice];
@@ -72,9 +80,11 @@ export default class App extends React.Component {
           <nav>
             <NavBar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
           </nav>
+          {console.log(">>>>>>>> App.js", this.state.clients)}
           <Switch>
             {/* <Route path='/somePage' component={someComponent} /> */}
-            <Route exact path='/' render={props => <Home clients={this.state.clients} invoices={this.state.invoices} />} />
+
+            <Route exact path='/' render={props => <Home {...props} clients={this.state.clients} invoices={this.state.invoices} />} />
             <Route path='/signup-page' render={props => <Signup {...props} onUserChange={this.updateUser} />} />
             <Route path='/login-page' render={props => <Login {...props} onUserChange={this.updateUser} />} />
 
@@ -89,7 +99,7 @@ export default class App extends React.Component {
               path='/clients/create'
               authorized={this.state.currentUser}
               redirect={'/login-page'}
-              render={props => <CreateClient {...props} onClientsChange={this.updateClients} />}
+              render={props => <CreateClient {...props} onClientsChange={this.onClientsChange} />}
             />
 
             <ProtectedRoute
@@ -110,8 +120,8 @@ export default class App extends React.Component {
               path='/clients/:id'
               authorized={this.state.currentUser}
               redirect={'/login-page'}
-              render={props => <UpdateClient {...props} clients={this.state.clients} onClientsChange={this.updateClients} />}
-            />            
+              render={props => <UpdateClient {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
+            />
 
           </Switch>
 

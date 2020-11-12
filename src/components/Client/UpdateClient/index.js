@@ -1,6 +1,6 @@
 import React from 'react';
 import CLIENT_SERVICE from '../../../services/ClientService';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default class UpdateClient extends React.Component {
   constructor(props) {
@@ -28,7 +28,8 @@ export default class UpdateClient extends React.Component {
     CLIENT_SERVICE.updateClient(_id, { firstName, lastName, email, company })
       .then(responseFromServer => {
         const { client } = responseFromServer.data;
-        this.props.onClientsChange(client);
+        ////console.log({ update: client })
+        this.props.onClientsChange();
         this.props.history.push('/');
         //this.props.history.push(`/clients/${client._id}`);
       })
@@ -52,7 +53,7 @@ export default class UpdateClient extends React.Component {
           <label>
             Last Name
             <input name='lastName' type='text' value={lastName} onChange={this.handleInputChange} />
-          </label>          
+          </label>
 
           <label>
             Email
@@ -62,7 +63,7 @@ export default class UpdateClient extends React.Component {
           <label>
             Company
             <textarea name='company' type='text' value={company} onChange={this.handleInputChange} />
-          </label>          
+          </label>
 
           <button>Save Changes</button>
         </form>

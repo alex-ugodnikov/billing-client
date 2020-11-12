@@ -13,7 +13,10 @@ const CLIENT_SERVICE = {
   },
   getClients() {
     return service.get('/api/clients');
-  }
+  },
+  updateClient(id, clientData) {
+    return service.post(`/api/clients/${id}/update`, clientData);
+  },
 };
 
 export default CLIENT_SERVICE;

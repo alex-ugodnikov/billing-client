@@ -17,13 +17,6 @@ export default class CreateClient extends React.Component {
     this.setState({ [name]: value });
   };
 
-  // ES6 way - the same as above:
-  // handleInputChange = ({ target: { name, value } }) => {
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
-
   handleFormSubmission = event => {
     event.preventDefault();
 
@@ -32,7 +25,6 @@ export default class CreateClient extends React.Component {
     CLIENT_SERVICE.createClient({ firstName, lastName, email, company, password })
       .then(responseFromServer => {
         const { client } = responseFromServer.data;
-
         this.props.onClientsChange(client);
         this.props.history.push('/');
       })
@@ -106,7 +98,7 @@ export default class CreateClient extends React.Component {
               />
             </label>
 
-            <button> Create Client </button>
+            <button>Create Client</button>
           </form>
 
           {message && <div>{message}</div>}

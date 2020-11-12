@@ -18,6 +18,7 @@ import CreateClient from './components/Client/CreateClient';
 import CreateInvoice from './components/Invoice/CreateInvoice';
 import InvoiceDetails from './components/Invoice/InvoiceDetails';
 import UpdateInvoice from './components/Invoice/UpdateInvoice';
+import UpdateClient from './components/Client/UpdateClient';
 
 export default class App extends React.Component {
   state = {
@@ -29,7 +30,7 @@ export default class App extends React.Component {
   componentDidMount = () => {
     Promise.all([CLIENT_SERVICE.getClients(), AUTH_SERVICE.getAuthenticatedUser()])
       .then(responseFromServer => {
-        console.log(responseFromServer[0].data);
+        //console.log(responseFromServer[0].data);
         const { clients } = responseFromServer[0].data;
         //const { invoices } = responseFromServer[1].data;
         const { user } = responseFromServer[1].data;
@@ -56,17 +57,15 @@ export default class App extends React.Component {
   updateInvoicesAfterDelete = id => {
 
     const updatedInvoices = [...this.state.invoices];
-
     updatedInvoices.splice(
       updatedInvoices.findIndex(invoice => invoice._id === id),
       1
     );
-
     this.setState({ invoices: updatedInvoices });
   };
 
   render() {
-    console.log('user in client: ', this.state.currentUser);
+    //console.log('user in client: ', this.state.currentUser);
     return (
       <div className='App'>
         <BrowserRouter>
@@ -101,25 +100,24 @@ export default class App extends React.Component {
             />
 
             <ProtectedRoute
-              path='/invoices/:id/edit'
+              path='/invoices/:id'
               authorized={this.state.currentUser}
               redirect={'/login-page'}
               render={props => <UpdateInvoice {...props} clients={this.state.clients} />}
             />
 
-            <Route
-              path='/invoices/:id'
-              render={props => (
-                <InvoiceDetails
-                  {...props}
-                  currentUser={this.state.currentUser}
-                  onInvoicesChangeAfterDelete={this.updateInvoicesAfterDelete}
-                />
-              )}
-            />
+            <ProtectedRoute
+              path='/clients/:id'
+              authorized={this.state.currentUser}
+              redirect={'/login-page'}
+              render={props => <UpdateClient {...props} clients={this.state.clients} onClientsChange={this.updateClients} />}
+            />            
+
           </Switch>
 
-          <footer style={{ clear: 'both' }}>Copyright 2020. All Right Reserved</footer>
+
+
+          <footer style={{ clear: 'both', marginTop: '100px', fontSize: '10px' }}>Copyright 2020. All Right Reserved</footer>
         </BrowserRouter>
       </div>
     );

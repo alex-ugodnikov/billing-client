@@ -12,7 +12,7 @@ const Home = props => {
         <Listinvoices invoices={props.invoices} />
       </div>*/}
 
-      <div>
+      <div style={{'display':'flex', 'flexFlow':'column', 'alignItems':'center'}}>
         <h3>Clients</h3>
         <ListClients clients={props.clients} />
       </div> 

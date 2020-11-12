@@ -14,7 +14,7 @@ const NavBar = props => {
   return (
     <nav>
       <Link to='/'>
-        <strong>Billing Portal</strong>
+        <h1>Billing Portal</h1>
       </Link>
 
       {(props.currentUser && (

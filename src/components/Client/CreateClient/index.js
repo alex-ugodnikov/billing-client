@@ -24,9 +24,6 @@ export default class CreateClient extends React.Component {
 
     CLIENT_SERVICE.createClient({ firstName, lastName, email, company, password })
       .then(responseFromServer => {
-        
-        //const { client } = responseFromServer.data;
-        //console.log({client : responseFromServer});
         this.props.onClientsChange();
         this.props.history.push('/');
       })

@@ -27,11 +27,11 @@ export default class Login extends React.Component {
     const { email, password } = this.state;
 
     AUTH_SERVICE.login({ email, password })
-      .then(responseFromServer => {
+      .then(async responseFromServer => {
         const { user } = responseFromServer.data;
 
         // Lift the user object to the App.js
-        this.props.onUserChange(user);
+        await this.props.onUserChange(user);
 
         // Redirect user to home page after successful sign up
         this.props.history.push('/');

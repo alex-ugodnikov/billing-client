@@ -7,16 +7,13 @@ const Home = props => {
     <>
       <h2>This is a home page of Billing Portal</h2>
 
-      {/* <div style={{ width: '50%', float: 'left' }}>
-        <h3>invoices</h3>
-        <Listinvoices invoices={props.invoices} />
-      </div>*/}
-
+      {props.currentUser &&   
       <div style={{ 'display': 'flex', 'flexFlow': 'column', 'alignItems': 'center' }}>
         <h3>Clients</h3>
-        {console.log(">>>>>", props)}
-        <ListClients clients={props.clients} />
+        {/* {console.log(">>>>>", props)} */}
+        <ListClients clients={props.clients} updateAfterDelete={props.updateAfterDelete}/>
       </div>
+      }
     </>
   );
 };

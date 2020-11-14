@@ -30,9 +30,7 @@ export default class App extends React.Component {
   componentDidMount = () => {
     Promise.all([CLIENT_SERVICE.getClients(), AUTH_SERVICE.getAuthenticatedUser()])
       .then(responseFromServer => {
-        //console.log(responseFromServer[0].data);
         const { clients } = responseFromServer[0].data;
-        //const { invoices } = responseFromServer[1].data;
         const { user } = responseFromServer[1].data;
 
         this.setState({ clients, currentUser: user });
@@ -42,6 +40,7 @@ export default class App extends React.Component {
 
   updateUser = user => {
     this.setState({ currentUser: user });
+    this.onClientsChange();
   };
 
   // updateClients = client => {
@@ -62,18 +61,17 @@ export default class App extends React.Component {
     this.setState({ invoices: updatedInvoices });
   };
 
-  updateInvoicesAfterDelete = id => {
-
-    const updatedInvoices = [...this.state.invoices];
-    updatedInvoices.splice(
-      updatedInvoices.findIndex(invoice => invoice._id === id),
+  updateAfterDelete = (id, propToChange) => {
+    const updatedProperty = [...this.state[propToChange]];
+    updatedProperty.splice(
+      updatedProperty.findIndex(property => property._id === id),
       1
     );
-    this.setState({ invoices: updatedInvoices });
-  };
+    this.setState({ [propToChange]: updatedProperty });
+  };  
+
 
   render() {
-    //console.log('user in client: ', this.state.currentUser);
     return (
       <div className='App'>
         <BrowserRouter>
@@ -82,9 +80,7 @@ export default class App extends React.Component {
           </nav>
           {console.log(">>>>>>>> App.js", this.state.clients)}
           <Switch>
-            {/* <Route path='/somePage' component={someComponent} /> */}
-
-            <Route exact path='/' render={props => <Home {...props} clients={this.state.clients} invoices={this.state.invoices} />} />
+            <Route exact path='/' render={props => <Home {...props} currentUser={this.state.currentUser} updateAfterDelete={this.updateAfterDelete} clients={this.state.clients} invoices={this.state.invoices} />} />
             <Route path='/signup-page' render={props => <Signup {...props} onUserChange={this.updateUser} />} />
             <Route path='/login-page' render={props => <Login {...props} onUserChange={this.updateUser} />} />
 
@@ -124,8 +120,6 @@ export default class App extends React.Component {
             />
 
           </Switch>
-
-
 
           <footer style={{ clear: 'both', marginTop: '100px', fontSize: '10px' }}>Copyright 2020. All Right Reserved</footer>
         </BrowserRouter>

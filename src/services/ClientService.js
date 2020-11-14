@@ -17,6 +17,9 @@ const CLIENT_SERVICE = {
   updateClient(id, clientData) {
     return service.post(`/api/clients/${id}/update`, clientData);
   },
+  deleteClient(id) {
+    return service.post(`/api/clients/${id}/delete`, {});
+  }  
 };
 
 export default CLIENT_SERVICE;

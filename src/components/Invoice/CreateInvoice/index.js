@@ -9,7 +9,6 @@ export default class CreateInvoice extends React.Component {
     client: '',
     amount: 0,
     paymentLink: '',
-    dateAdded: '',
     message: null
     // authors: [] // in case you want to have a call to server in componentDidMount, you need authors array in the state
   };
@@ -22,9 +21,9 @@ export default class CreateInvoice extends React.Component {
   handleFormSubmission = event => {
     event.preventDefault();
 
-    const { title, description, client, amount, paymentLink, dateAdded } = this.state;
+    const { title, description, client, amount, paymentLink } = this.state;
 
-    INVOICE_SERVICE.createInvoice({ title, description, client, amount, paymentLink, dateAdded })
+    INVOICE_SERVICE.createInvoice({ title, description, client, amount, paymentLink })
       .then(responseFromServer => {
         const { invoice } = responseFromServer.data;
         this.props.onInvoicesChange(invoice);
@@ -39,7 +38,7 @@ export default class CreateInvoice extends React.Component {
 
   render() {
 
-    const { title, description, client, amount, paymentLink, dateAdded, message } = this.state;
+    const { title, description, client, amount, paymentLink, message } = this.state;
 
     return (
       <section>

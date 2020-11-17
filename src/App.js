@@ -16,7 +16,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
 import CreateClient from './components/Client/CreateClient';
 import CreateInvoice from './components/Invoice/CreateInvoice';
-import InvoiceDetails from './components/Invoice/InvoiceDetails';
+import ClientDetails from './components/Client/ClientDetails';
 import UpdateInvoice from './components/Invoice/UpdateInvoice';
 import UpdateClient from './components/Client/UpdateClient';
 
@@ -113,11 +113,18 @@ export default class App extends React.Component {
             />
 
             <ProtectedRoute
-              path='/clients/:id'
+              path='/clients/:id/details'
+              authorized={this.state.currentUser}
+              redirect={'/login-page'}
+              render={props => <ClientDetails {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
+            />              
+
+            <ProtectedRoute
+              path='/clients/:id/edit'
               authorized={this.state.currentUser}
               redirect={'/login-page'}
               render={props => <UpdateClient {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
-            />
+            />          
 
           </Switch>
 

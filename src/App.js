@@ -20,6 +20,10 @@ import ClientDetails from './components/Client/ClientDetails';
 import UpdateInvoice from './components/Invoice/UpdateInvoice';
 import UpdateClient from './components/Client/UpdateClient';
 
+/* Material UI */
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 export default class App extends React.Component {
   state = {
     currentUser: null,
@@ -73,6 +77,8 @@ export default class App extends React.Component {
 
   render() {
     return (
+      <Container component="main" maxWidth="sm">
+      <CssBaseline />
       <div className='App'>
         <BrowserRouter>
           <nav>
@@ -131,6 +137,9 @@ export default class App extends React.Component {
           <footer style={{ clear: 'both', marginTop: '100px', fontSize: '10px' }}>Copyright 2020. All Right Reserved</footer>
         </BrowserRouter>
       </div>
+
+      </Container>
+      
     );
   }
 }

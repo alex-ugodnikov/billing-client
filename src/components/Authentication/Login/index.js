@@ -2,7 +2,35 @@ import React from 'react';
 
 import AUTH_SERVICE from '../../../services/AuthService';
 
-export default class Login extends React.Component {
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const useStyles = theme => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+});
+
+class Login extends React.Component {
+  
   state = {
     email: '',
     password: '',
@@ -14,24 +42,17 @@ export default class Login extends React.Component {
     this.setState({ [name]: value });
   };
 
-  // ES6 destructuring - the same as above:
-  // handleInputChange = ({ target: { name, value } }) => {
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
-
   handleFormSubmission = event => {
     event.preventDefault();
 
     const { email, password } = this.state;
 
     AUTH_SERVICE.login({ email, password })
-      .then(async responseFromServer => {
+      .then(responseFromServer => {
         const { user } = responseFromServer.data;
 
         // Lift the user object to the App.js
-        await this.props.onUserChange(user);
+        this.props.onUserChange(user);
 
         // Redirect user to home page after successful sign up
         this.props.history.push('/');
@@ -44,12 +65,49 @@ export default class Login extends React.Component {
   };
 
   render() {
+
+    const { classes } = this.props;
+
     return (
       <>
-        <section>
-          <h2> Login </h2>
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
 
-          <form onSubmit={this.handleFormSubmission}>
+        <section>
+
+          <form onSubmit={this.handleFormSubmission} className={classes.form}>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={this.handleInputChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={this.handleInputChange}
+          />
+
+{/* 
             <label>
               Email:
               <input
@@ -70,15 +128,27 @@ export default class Login extends React.Component {
                 value={this.state.password}
                 onChange={this.handleInputChange}
               />
-            </label>
+            </label> */}
 
-            <button> Login </button>
+            <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
           </form>
 
           {/* if the message is not NULL then show the message */}
           {this.state.message && <div> {this.state.message} </div>}
         </section>
+        </div>
       </>
     );
   }
 }
+
+export default withStyles(useStyles)(Login)
+

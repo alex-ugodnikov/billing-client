@@ -77,13 +77,14 @@ export default class App extends React.Component {
 
   render() {
     return (
+      <>
+      <BrowserRouter>
+
+        <NavBar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
+
       <Container component="main" maxWidth="sm">
       <CssBaseline />
-      <div className='App'>
-        <BrowserRouter>
-          <nav>
-            <NavBar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
-          </nav>
+
           {console.log(">>>>>>>> App.js", this.state.clients)}
           <Switch>
             <Route exact path='/' render={props => <Home {...props} currentUser={this.state.currentUser} updateAfterDelete={this.updateAfterDelete} clients={this.state.clients} invoices={this.state.invoices} />} />
@@ -135,10 +136,9 @@ export default class App extends React.Component {
           </Switch>
 
           <footer style={{ clear: 'both', marginTop: '100px', fontSize: '10px' }}>Copyright 2020. All Right Reserved</footer>
-        </BrowserRouter>
-      </div>
-
       </Container>
+      </BrowserRouter>
+      </>
       
     );
   }

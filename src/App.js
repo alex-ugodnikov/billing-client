@@ -72,74 +72,74 @@ export default class App extends React.Component {
       1
     );
     this.setState({ [propToChange]: updatedProperty });
-  };  
+  };
 
 
   render() {
     return (
       <>
-      <BrowserRouter>
+        <BrowserRouter>
 
-        <NavBar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
+          <NavBar currentUser={this.state.currentUser} onUserChange={this.updateUser} />
 
-      <Container component="main" maxWidth="sm">
-      <CssBaseline />
+          <Container component="main" maxWidth="md">
+            <CssBaseline />
 
-          {console.log(">>>>>>>> App.js", this.state.clients)}
-          <Switch>
-            <Route exact path='/' render={props => <Home {...props} currentUser={this.state.currentUser} updateAfterDelete={this.updateAfterDelete} clients={this.state.clients} invoices={this.state.invoices} />} />
-            <Route path='/signup-page' render={props => <Signup {...props} onUserChange={this.updateUser} />} />
-            <Route path='/login-page' render={props => <Login {...props} onUserChange={this.updateUser} />} />
+            {console.log(">>>>>>>> App.js", this.state.clients)}
+            <Switch>
+              <Route exact path='/' render={props => <Home {...props} currentUser={this.state.currentUser} updateAfterDelete={this.updateAfterDelete} clients={this.state.clients} invoices={this.state.invoices} />} />
+              <Route path='/signup-page' render={props => <Signup {...props} onUserChange={this.updateUser} />} />
+              <Route path='/login-page' render={props => <Login {...props} onUserChange={this.updateUser} />} />
 
-            <ProtectedRoute
-              path='/profile'
-              authorized={this.state.currentUser}
-              redirect={'/signup-page'}
-              render={props => <Profile {...props} currentUser={this.state.currentUser} />}
-            />
+              <ProtectedRoute
+                path='/profile'
+                authorized={this.state.currentUser}
+                redirect={'/signup-page'}
+                render={props => <Profile {...props} currentUser={this.state.currentUser} />}
+              />
 
-            <ProtectedRoute
-              path='/clients/create'
-              authorized={this.state.currentUser}
-              redirect={'/login-page'}
-              render={props => <CreateClient {...props} onClientsChange={this.onClientsChange} />}
-            />
+              <ProtectedRoute
+                path='/clients/create'
+                authorized={this.state.currentUser}
+                redirect={'/login-page'}
+                render={props => <CreateClient {...props} onClientsChange={this.onClientsChange} />}
+              />
 
-            <ProtectedRoute
-              path='/invoices/create'
-              authorized={this.state.currentUser}
-              redirect={'/login-page'}
-              render={props => <CreateInvoice {...props} clients={this.state.clients} onInvoicesChange={this.updateInvoices} />}
-            />
+              <ProtectedRoute
+                path='/invoices/create'
+                authorized={this.state.currentUser}
+                redirect={'/login-page'}
+                render={props => <CreateInvoice {...props} clients={this.state.clients} onInvoicesChange={this.updateInvoices} />}
+              />
 
-            <ProtectedRoute
-              path='/invoices/:id'
-              authorized={this.state.currentUser}
-              redirect={'/login-page'}
-              render={props => <UpdateInvoice {...props} clients={this.state.clients} />}
-            />
+              <ProtectedRoute
+                path='/invoices/:id'
+                authorized={this.state.currentUser}
+                redirect={'/login-page'}
+                render={props => <UpdateInvoice {...props} clients={this.state.clients} />}
+              />
 
-            <ProtectedRoute
-              path='/clients/:id/details'
-              authorized={this.state.currentUser}
-              redirect={'/login-page'}
-              render={props => <ClientDetails {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
-            />              
+              <ProtectedRoute
+                path='/clients/:id/details'
+                authorized={this.state.currentUser}
+                redirect={'/login-page'}
+                render={props => <ClientDetails {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
+              />
 
-            <ProtectedRoute
-              path='/clients/:id/edit'
-              authorized={this.state.currentUser}
-              redirect={'/login-page'}
-              render={props => <UpdateClient {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
-            />          
+              <ProtectedRoute
+                path='/clients/:id/edit'
+                authorized={this.state.currentUser}
+                redirect={'/login-page'}
+                render={props => <UpdateClient {...props} clients={this.state.clients} onClientsChange={this.onClientsChange} />}
+              />
 
-          </Switch>
+            </Switch>
 
-          <footer style={{ clear: 'both', marginTop: '100px', fontSize: '10px' }}>Copyright 2020. All Right Reserved</footer>
-      </Container>
-      </BrowserRouter>
+            <footer style={{ clear: 'both', marginTop: '100px', fontSize: '10px' }}>Copyright 2020. All Right Reserved</footer>
+          </Container>
+        </BrowserRouter>
       </>
-      
+
     );
   }
 }
